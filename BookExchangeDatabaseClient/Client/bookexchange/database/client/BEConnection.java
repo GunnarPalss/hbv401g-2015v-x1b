@@ -1,28 +1,31 @@
 package bookexchange.database.client;
 
-class BEConnection
+import bookexchange.database.common.Message;
+import bookexchange.database.common.interfaces.IConnection;
+import bookexchange.database.common.interfaces.IConnectionInfo;
+
+class BEConnection implements IConnection
 {
 	
-	public BEConnection(BEConnectionInfo info)
+	public BEConnection(IConnectionInfo info)
 	{
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void SendBytes(byte[] bytes)
+	{
+		
+	}
+	
+	// Returns all the messages that are waiting since the last call;
+	public Message[] GetMessages()
+	{
+		return null;
 	}
 	
 	public void Close()
 	{
 		// TODO Auto-generated method stub
 		
-	}
-}
-
-class BEConnectionInfo
-{
-	public final String IP;
-	public final int PORT;
-	
-	public BEConnectionInfo(String ip, int port)
-	{
-		IP = ip;
-		PORT = port;
 	}
 }

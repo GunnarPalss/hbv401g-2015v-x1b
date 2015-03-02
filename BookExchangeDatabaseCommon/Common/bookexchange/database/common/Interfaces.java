@@ -1,5 +1,9 @@
 package bookexchange.database.common;
 
-interface ISerialize {}
+interface ISerialize
+{
+}
 
-interface IOrder extends ISerialize {}
+interface IOrder extends ISerialize
+{
+}

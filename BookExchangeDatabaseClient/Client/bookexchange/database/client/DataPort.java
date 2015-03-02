@@ -1,13 +1,16 @@
 package bookexchange.database.client;
 
+import bookexchange.database.common.interfaces.IConnection;
+import bookexchange.database.common.interfaces.IConnectionInfo;
+
 public class DataPort
 {
-	BEConnectionInfo info;
-	BEConnection conn;
+	IConnectionInfo info;
+	IConnection conn;
 	
 	public DataPort(String ip, int port)
 	{
-		info = new BEConnectionInfo(ip, port);
+		info = new IConnectionInfo(ip, port);
 	}
 	
 	// Return when the Dataport has an active connection
