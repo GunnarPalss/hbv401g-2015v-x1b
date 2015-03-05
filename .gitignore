@@ -1,0 +1,6 @@
+/.metadata/
+/BookExchangeDatabase/bin/
+/BookExchangeDatabaseClient/bin/
+/BookExchangeDatabaseServer/bin/
+/UnitTesting/bin/
+/RemoteSystemsTempFiles/
