@@ -18,7 +18,14 @@ public class DatabaseBook {
     private String description;
     private String imageURL;
     
-    private static DataPort port = new DataPort();
+    /* Unimplemented:
+    
+    public final String publisher;
+    public final int year;
+    public final String category;
+    public final String subcategory;
+    
+    */
     
     public DatabaseBook(int ISBN, String title, String authors, int edition, int price, String description, String pictureURL){
         this.ISBN = ISBN;
@@ -30,12 +37,12 @@ public class DatabaseBook {
         this.imageURL = pictureURL;
     }
     
-    public DatabaseBook(){
+    private DatabaseBook(){
         ISBN = edition = price = 0;
         title = authors = description = imageURL = null;
     }
     
-    public DatabaseBook(int ISBN, String title, String authors, int edition){
+    private DatabaseBook(int ISBN, String title, String authors, int edition){
         this.ISBN = ISBN;
         this.title = title;
         this.authors = authors;
@@ -43,10 +50,7 @@ public class DatabaseBook {
     }
     
     public static DatabaseBook stringToDBB(String[] data) throws IllegalArgumentException{
-        if(data.length == 4){
-            return new DatabaseBook(Integer.parseInt(data[0]), data[1], data[2], Integer.parseInt(data[3]));
-        }
-        else if (data.length == 7){
+        if (data.length == 7){
             return new DatabaseBook(Integer.parseInt(data[0]), data[1], data[2], Integer.parseInt(data[3]), Integer.parseInt(data[4]), data[5], data[6]);
         }
         else{
@@ -55,50 +59,49 @@ public class DatabaseBook {
     }
     
     public static void createBook(int ISBN, String title, String authors, int edition, int price, String description, String imageURL){
-        String SQL = "INSERT INTO databasebooks VALUES('" 
+        if(existsISBN(ISBN)){deleteBook(ISBN);}
+        
+        String SQL = "INSERT INTO databasebook VALUES('" 
                 + Integer.toString(ISBN) + "','" + title + "','"
                 + authors + "','"
                 + Integer.toString(edition) + "','"
                 + Integer.toString(price) + "','"
                 + description + "','"
                 + imageURL + "')";
-        DatabaseBook.port.execute(SQL);
+        DataPort.get().execute(SQL);
     }
     
-    public static void createBook(int ISBN, String title, String authors, int edition){
-        String SQL = "INSERT INTO databasebooks VALUES('" 
-                + Integer.toString(ISBN) + "','" + title + "','"
-                + authors + "','"
-                + Integer.toString(edition) + "')";
-        DatabaseBook.port.execute(SQL);
-    }
-    
-    public static void deleteBook(int ISBN){
+    private static void deleteBook(int ISBN){
         String SQL = "DELETE FROM databasebooks WHERE isbn = " + Integer.toString(ISBN);
-        DatabaseBook.port.execute(SQL);
+        DataPort.get().execute(SQL);
     }
     
-    public static void deleteBook(String title){
-        String SQL1 = "DELETE FROM databasebooks WHERE title = '" + title + "'";
-        DatabaseBook.port.execute(SQL1);
-        //UserBook.deleteBook(title);
+    private static void deleteBook(String title){
+        String SQL1 = "DELETE FROM databasebook WHERE title = '" + title + "'";
+        DataPort.get().execute(SQL1);
+    }
+    
+    //Ath. fallið createBook notar fallið deleteBook. Þess vegna er annað fall, eraseBook, til að fjarlægja einnig öll UserBook með sama ISBN.
+    public static void eraseBook(int ISBN){
+        deleteBook(ISBN);
+        UserBook.deleteBook(ISBN);
     }
     
     public static DatabaseBook getBook(int ISBN){
-        String SQL = "SELECT * FROM databasebooks WHERE isbn = " + Integer.toString(ISBN);
-        ArrayList<String[]> temp = DatabaseBook.port.executeAndReturn(SQL, 7);
+        String SQL = "SELECT * FROM databasebook WHERE isbn = " + Integer.toString(ISBN);
+        ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 7);
         return stringToDBB(temp.get(0));
     }
     
     public static DatabaseBook getBook(String title){
-        String SQL = "SELECT * FROM databasebooks WHERE title = '" + title +"'";
-        ArrayList<String[]> temp = DatabaseBook.port.executeAndReturn(SQL, 7);
+        String SQL = "SELECT * FROM databasebook WHERE title = '" + title +"'";
+        ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 7);
         return stringToDBB(temp.get(0));
     }
     
     public static ArrayList<DatabaseBook> getAll(){
-        String SQL = "SELECT * FROM databasebooks";
-        ArrayList<String[]> temp = DatabaseBook.port.executeAndReturn(SQL, 7);
+        String SQL = "SELECT * FROM databasebook";
+        ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 7);
         ArrayList<DatabaseBook> dbbArray = new ArrayList();
         for(String[] DBB: temp){
                 dbbArray.add(stringToDBB(DBB));
@@ -107,8 +110,8 @@ public class DatabaseBook {
     }
     
     public static ArrayList<DatabaseBook> searchTitle(String title){
-        String SQL = "SELECT * FROM databasebooks WHERE title Like '%" + title + "%'";
-        ArrayList<String[]> temp = DatabaseBook.port.executeAndReturn(SQL, 7);
+        String SQL = "SELECT * FROM databasebook WHERE title LIKE '%" + title + "%'";
+        ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 7);
         ArrayList<DatabaseBook> dbbArray = new ArrayList();
         for(String[] DBB: temp){
                 dbbArray.add(stringToDBB(DBB));
@@ -117,8 +120,8 @@ public class DatabaseBook {
     }
     
     public static ArrayList<DatabaseBook> searchAuthor(String author){
-        String SQL = "SELECT * FROM databasebooks WHERE title Like '%" + author + "%'";
-        ArrayList<String[]> temp = DatabaseBook.port.executeAndReturn(SQL, 7);
+        String SQL = "SELECT * FROM databasebook WHERE author LIKE '%" + author + "%'";
+        ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 7);
         ArrayList<DatabaseBook> dbbArray = new ArrayList();
         for(String[] DBB: temp){
                 dbbArray.add(stringToDBB(DBB));
@@ -126,19 +129,16 @@ public class DatabaseBook {
         return dbbArray;
     }
     
-    public void editPrice(int price){
-        String SQL = "UPDATE databasebooks SET price = " + Integer.toString(price) + " WHERE isbn = " + this.ISBN;
-        DatabaseBook.port.execute(SQL);
+    public static boolean existsISBN(int ISBN){
+        String SQL = "SELECT * FROM databasebook WHERE isbn =" + Integer.toString(ISBN);
+        ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 1);
+        return !temp.isEmpty();
     }
     
-    public void editDescription(String description){
-        String SQL = "UPDATE databasebooks SET description = '" + description + "' WHERE isbn = " + this.ISBN;
-        DatabaseBook.port.execute(SQL);
-    }
-    
-    public void editImageURL(String imageURL){
-        String SQL = "UPDATE databasebooks SET imageurl = '" + imageURL + "' WHERE isbn = " + this.ISBN;
-        DatabaseBook.port.execute(SQL);
+    public static boolean existsTitle(String title){
+        String SQL = "SELECT * FROM databasebook WHERE isbn =" + title;
+        ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 1);
+        return !temp.isEmpty();
     }
     
     public int getPrice(){
@@ -156,7 +156,7 @@ public class DatabaseBook {
     public static void main(String[] args){
         
         System.out.println("This is DatabaseBook");
-        DatabaseBook.port.connect();
+        DataPort.get().connect();
         
     }
     

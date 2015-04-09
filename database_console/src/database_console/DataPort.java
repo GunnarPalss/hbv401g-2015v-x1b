@@ -14,19 +14,21 @@ import java.sql.ResultSet;
 //import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
+//The class DataPort is a singleton.
 public class DataPort {
 
     /**
      * @param args the command line arguments
      */
+    private static final DataPort INSTANCE = new DataPort();
 
-    private final String host = "jdbc:derby://localhost:1527/BookExchangeDatabase";
-    private final String uName = "administrator";
-    private final String uPass = "administrator";
+    private static final String host = "jdbc:derby://localhost:1527/BookExchangeDatabase";
+    private static final String uName = "administrator";
+    private static final String uPass = "administrator";
     
-    private Connection con;
-    private Statement stmt;
-    private ResultSet rs;
+    private static Connection con;
+    private static Statement stmt;
+    private static ResultSet rs;
     /*private PreparedStatement prepStmt;
     
     private final String add = "INSERT INTO ? VALUES(?)";
@@ -35,7 +37,11 @@ public class DataPort {
     private final String update = "UPDATE ? SET ? WHERE ?";
     private final String delete = "DELETE FROM ? WHERE ?";*/
     
-    public DataPort(){}
+    private DataPort(){}
+    
+    public static DataPort get(){
+        return INSTANCE;
+    }
     
     public void connect(){
         
@@ -62,13 +68,24 @@ public class DataPort {
         
     }
     
+    /*
     public static boolean isWhiteListed(String s){
-        String acceptableChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz0123456789-";
+        String acceptableChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvxyz0123456789- .";
         for(int i = 0; i < s.length(); i++){
             if(!acceptableChars.contains(Character.toString(s.charAt(i)))){return false;}
         }
         return true;
     }
+    
+    public static ArrayList arrayFromResult(String SQL, int size){
+        ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, size);
+        ArrayList myArray = new ArrayList();
+        for(String[] s: temp){
+                //myArray.add(stringToItem(s));
+            }
+        return myArray;
+    }
+    */
     
     //Notað til að fá upplýsingar úr gagnagrunni:
     public ArrayList<String[]> executeAndReturn(String SQL, int size){
