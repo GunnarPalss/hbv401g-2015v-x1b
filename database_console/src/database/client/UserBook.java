@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package database.client;
 
 import java.util.ArrayList;
 
-public class UserBook {
+public class UserBook
+{
 
 	public final int instanceID;
 	public final int accountID;
@@ -18,7 +18,8 @@ public class UserBook {
 	private String pictureURL;
 	private static int id = 0;
 
-	private UserBook(int instanceID, int accountID, int ISBN, int userPrice, String condition, String pictureURL){
+	private UserBook(int instanceID, int accountID, int ISBN, int userPrice, String condition, String pictureURL)
+	{
 		this.instanceID = instanceID;
 		this.accountID = accountID;
 		this.ISBN = ISBN;
@@ -27,134 +28,167 @@ public class UserBook {
 		this.pictureURL = pictureURL;
 	}
 
-	public static UserBook stringToUB(String[] data) throws IllegalArgumentException{
-		if(data.length == 6)
+	public static UserBook stringToUB(String[] data) throws IllegalArgumentException
+	{
+		if (data.length == 6)
 			return new UserBook(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), data[4], data[5]);
-		
+
 		throw new IllegalArgumentException("Input, String[], must have length 6.");
 	}
 
-	public static void createBook(int accountID, int ISBN){
+	public static void createBook(int accountID, int ISBN)
+	{
 		//Ekki gá hvort að eintak með sama ISBN sé nú þegar til. Notandi má vera að selja tvö eintök af sömu bók.
 		DatabaseBook copy = DatabaseBook.getBook(ISBN);
 		String SQL = "INSERT INTO UserBook VALUES('"
-			+ Integer.toString(id) + "','"
-			+ Integer.toString(accountID) + "','"
-			+ Integer.toString(ISBN) + "','"
-			+ Integer.toString(0) + "','" //Látum verðið vera 0 sem default. Það er svosem hægt að láta töfluna UserBook gera það sjálfkrafa.
-			+ "','" //Tómur strengur fyrir condition
-			+ "'"; //Tómur strengur fyrir pictureURL
+				+ Integer.toString(id) + "','"
+				+ Integer.toString(accountID) + "','"
+				+ Integer.toString(ISBN) + "','"
+				+ Integer.toString(0) + "','" //Látum verðið vera 0 sem default. Það er svosem hægt að láta töfluna UserBook gera það sjálfkrafa.
+				+ "','" //Tómur strengur fyrir condition
+				+ "'"; //Tómur strengur fyrir pictureURL
 		DataPort.get().execute(SQL);
 		id++;
 	}
 
-	public static ArrayList<UserBook> getBooks(int ISBN){
+	public static ArrayList<UserBook> getBooks(int ISBN)
+	{
 		String SQL = "SELECT * FROM UserBook WHERE isbn =" + Integer.toString(ISBN);
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
 		ArrayList<UserBook> ubArray = new ArrayList();
-		for(String[] UB: temp)
+		for (String[] UB : temp)
 			ubArray.add(stringToUB(UB));
-				
+
 		return ubArray;
 	}
 
-	public static ArrayList<UserBook> getBooks(String title){
-		String SQL = "SELECT * FROM UserBook NATURAL JOIN DatabaseBook WHERE title ='" + title + "'";
+	public static ArrayList<UserBook> getBooks(String title)
+	{
+		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition, pictureurl FROM UserBook NATURAL JOIN DatabaseBook WHERE title ='" + title + "'";
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
 		ArrayList<UserBook> ubArray = new ArrayList();
-		for(String[] UB: temp)
+		for (String[] UB : temp)
 			ubArray.add(stringToUB(UB));
-		
-		return ubArray;
-	}
 
-	public static ArrayList<UserBook> getAll(){
-		String SQL = "SELECT * FROM UserBook";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
-		ArrayList<UserBook> ubArray = new ArrayList();
-		for(String[] UB: temp)
-			ubArray.add(stringToUB(UB));
-				
 		return ubArray;
 	}
 
 	//Ath. deleteBook eyðir einu eintaki af UserBook með ákv. ISBN, eraseBook eyðir öllum eintökum af UserBook með ákveðið ISBN.
 	//Klasinn DatabaseBook notar fallið eraseBook.
-	public static void deleteBook(int accountID, int ISBN){
+	public static void deleteBook(int accountID, int ISBN)
+	{
 		String SQL = "DELETE FROM UserBook WHERE accountID = " + Integer.toString(accountID) + " AND isbn = " + Integer.toString(ISBN);
 		DataPort.get().execute(SQL);
 	}
 
-	public static void deleteBook(int instanceID){
+	public static void deleteBook(int instanceID)
+	{
 		String SQL = "DELETE FROM UserBook WHERE instanceID = " + Integer.toString(instanceID);
 		DataPort.get().execute(SQL);
 	}
 
 	//Ath. deleteBook eyðir einu eintaki af UserBook með ákv. ISBN, eraseBook eyðir öllum eintökum af UserBook með ákveðið ISBN.
 	//Klasinn DatabaseBook notar fallið eraseBook.
-	public static void eraseBook(int ISBN){
+	public static void eraseBook(int ISBN)
+	{
 		String SQL = "DELETE FROM UserBook WHERE isbn = " + Integer.toString(ISBN);
 		DataPort.get().execute(SQL);
 	}
 
-	public static ArrayList<UserBook> searchAuthor(String author){
-		String SQL = "SELECT * FROM databasebooks NATURAL JOIN userbook WHERE title Like '%" + author + "%'";
+	public static ArrayList<UserBook> searchAuthor(String author)
+	{
+		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition, pictureurl FROM databasebook NATURAL JOIN userbook WHERE authors Like '%" + author + "%'";
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
 		ArrayList<UserBook> ubArray = new ArrayList();
-		for(String[] UB: temp)
+		for (String[] UB : temp)
 			ubArray.add(stringToUB(UB));
-		
+
 		return ubArray;
 	}
 
-	public static ArrayList<UserBook> searchTitle(String title){
-		String SQL = "SELECT * FROM databasebooks NATURAL JOIN userbook WHERE title LIKE '%" + title + "%'";
+	public static ArrayList<UserBook> searchTitle(String title)
+	{
+		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition, pictureurl FROM databasebook NATURAL JOIN userbook WHERE title LIKE '%" + title + "%'";
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
 		ArrayList<UserBook> ubArray = new ArrayList();
-		for(String[] UB: temp)
+		for (String[] UB : temp)
 			ubArray.add(stringToUB(UB));
-		
+
 		return ubArray;
 	}
 
-	public static boolean existsISBN(int ISBN){
+	public static boolean existsISBN(int ISBN)
+	{
 		String SQL = "SELECT * FROM UserBook WHERE isbn =" + Integer.toString(ISBN);
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
 		return !temp.isEmpty();
 	}
 
-	public static boolean existsTitle(String title){
+	public static boolean existsTitle(String title)
+	{
 		String SQL = "SELECT * FROM UserBook WHERE title ='" + title + "'";
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
 		return !temp.isEmpty();
 	}
 
-	public void editPrice(int price){
+	public void editPrice(int price)
+	{
 		this.userPrice = price;
+		String SQL = "UPDATE userbook SET userprice = " + Integer.toString(price) + " WHERE instanceid = " + this.instanceID;
 	}
 
-	public void editCondition(String condition){
+	public void editCondition(String condition)
+	{
 		this.condition = condition;
+		String SQL = "UPDATE userbook SET condition = " + condition + " WHERE instanceid = " + this.instanceID;
 	}
 
-	public void editPictureURL(String pictureURL){
+	public void editPictureURL(String pictureURL)
+	{
 		this.pictureURL = pictureURL;
+		String SQL = "UPDATE userbook SET pictureurl = " + pictureURL + " WHERE instanceid = " + this.instanceID;
 	}
 
-	public int getPrice(){
+	public int getPrice()
+	{
 		return this.userPrice;
 	}
 
-	public String getCondition(){
+	public String getCondition()
+	{
 		return this.condition;
 	}
 
-	public String getPictureURL(){
+	public String getPictureURL()
+	{
 		return this.pictureURL;
 	}
 
-	public static void main(String[] args){
+	public void print()
+	{
+		System.out.println("instanceID: " + this.instanceID + " accountID: " + this.accountID + " ISBN: " + this.ISBN + " userPrice: " + this.userPrice + " condition: " + this.condition);
+	}
+
+	public static void main(String[] args)
+	{
 		System.out.println("This is UserBook");
 		DataPort.get().connect();
+
+		System.out.println("Get by ISBN:");
+		UserBook.getBooks(9999).get(0).print();
+		UserBook.getBooks(9999).get(1).print();
+		System.out.println("Get by author:");
+		UserBook.getBooks("test_title").get(0).print();
+		UserBook.getBooks("test_title").get(1).print();
+		UserBook.getBooks("title2").get(0).print();
+
+		System.out.println("Search title:");
+		UserBook.searchTitle("title").get(0).print();
+		UserBook.searchTitle("title").get(1).print();
+
+		System.out.println("Search author:");
+		UserBook.searchAuthor("author2").get(0).print();
+
+		DataPort.get().disconnect();
 	}
 }
