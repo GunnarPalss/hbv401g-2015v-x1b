@@ -53,6 +53,7 @@ class DataPort
 		{
 			Class.forName("org.sqlite.JDBC");
 			con = DriverManager.getConnection(host, uName, uPass);
+			stmt = con.createStatement();
 		} catch (SQLException | ClassNotFoundException ex)
 		{
 			Logger.getLogger(DataPort.class.getName()).log(Level.SEVERE, null, ex);
@@ -132,12 +133,10 @@ class DataPort
 		DataPort port = new DataPort();
 		port.connect();
 		
-		Statement stat;
 		try
 		{
-			stat = con.createStatement();
-			stat.executeUpdate("drop table if exists school;");
-			stat.executeUpdate("create table school (name, state);");
+			stmt.executeUpdate("drop table if exists school;");
+			stmt.executeUpdate("create table school (name, state);");
 			PreparedStatement prep = con.prepareStatement(
 			"insert into school values (?, ?);");
 			prep.setString(1, "UTD");
@@ -152,7 +151,7 @@ class DataPort
 			con.setAutoCommit(false);
 			prep.executeBatch();
 			con.setAutoCommit(true);
-			ResultSet ss = stat.executeQuery("select * from school;");
+			ResultSet ss = stmt.executeQuery("select * from school;");
 			while (ss.next()) {
 				System.out.print("Namechool = " + ss.getString("name") + " ");
 				System.out.println("state" + ss.getString("state"));

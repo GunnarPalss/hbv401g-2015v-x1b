@@ -42,7 +42,7 @@ public class DatabaseBookScraper
 	public static void eraseBook(int ISBN)
 	{
 		deleteBook(ISBN);
-		UserBook.deleteBook(ISBN);
+		UserBookTable.get().deleteBook(ISBN);
 	}
 
 	private static boolean existsISBN(int ISBN)
@@ -51,16 +51,4 @@ public class DatabaseBookScraper
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 1);
 		return !temp.isEmpty();
 	}
-
-	public static void main(String args[])
-	{
-		System.out.println("This is DatabaseBook");
-		DataPort.get().connect();
-
-		//Gefur villu einhverra hluta vegna:
-		DatabaseBookScraper.createBook(1111, "asdf", "create_author", 666, "create_descr", "create_categ", "create_subcateg");
-
-		DataPort.get().disconnect();
-	}
-
 }
