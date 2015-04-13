@@ -33,7 +33,7 @@ public class UserBookTable
 	public static void createBook(int accountID, int ISBN)
 	{
 		//Ekki gá hvort að eintak með sama ISBN sé nú þegar til. Notandi má vera að selja tvö eintök af sömu bók.
-		DatabaseBook copy = DatabaseBookTable.getBook(ISBN);
+		DatabaseBook copy = DatabaseBookTable.get().getBook(ISBN);
 		String SQL = "INSERT INTO UserBook VALUES('"
 				+ Integer.toString(accountID) + "','"
 				+ Integer.toString(ISBN) + "','"

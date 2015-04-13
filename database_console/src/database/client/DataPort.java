@@ -40,7 +40,9 @@ class DataPort
 	 private final String update = "UPDATE ? SET ? WHERE ?";
 	 private final String delete = "DELETE FROM ? WHERE ?";*/
 
-	private DataPort() {}
+	private DataPort()
+	{
+	}
 
 	public static DataPort get()
 	{
@@ -54,6 +56,7 @@ class DataPort
 			Class.forName("org.sqlite.JDBC");
 			con = DriverManager.getConnection(host, uName, uPass);
 			stmt = con.createStatement();
+			this.initializeDatabase();
 		} catch (SQLException | ClassNotFoundException ex)
 		{
 			Logger.getLogger(DataPort.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,7 +74,38 @@ class DataPort
 		{
 			System.out.println(err.getMessage());
 		}
+	}
 
+	public void initializeDatabase()
+	{
+		try
+		{
+			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS DATABASEBOOK ("
+					+ "ISBN INTEGER PRIMARY KEY NOT NULL, "
+					+ "TITLE VARCHAR(100) NOT NULL, "
+					+ "AUTHORS VARCHAR(100) NOT NULL, "
+					+ "PRICE INTEGER NOT NULL, "
+					+ "DESCRIPTION VARCHAR(500), "
+					+ "CATEGORY VARCHAR(30), "
+					+ "SUBCATEGORY VARCHAR(30)"
+					+ ");");
+			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS USERBOOK ("
+					+ "INSTANCEID INTEGER PRIMARY KEY NOT NULL, "
+					+ "ACCOUNTID INTEGER NOT NULL, "
+					+ "ISBN INTEGER NOT NULL, "
+					+ "USERPRICE INTEGER NOT NULL, "
+					+ "CONDITION VARCHAR(15) NOT NULL"
+					+ ");");
+			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS USERACCOUNT ("
+					+ "ACCOUNTID INTEGER PRIMARY KEY NOT NULL, "
+					+ "USERNAME VARCHAR(20) NOT NULL, "
+					+ "PASSWORD VARCHAR(30) NOT NULL"
+					+ ");");
+
+		} catch (SQLException ex)
+		{
+			Logger.getLogger(DataPort.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 
 	/*
@@ -132,13 +166,15 @@ class DataPort
 		// TODO code application logic here
 		DataPort port = new DataPort();
 		port.connect();
+
+		DatabaseBookScraper.get().createBook(1011, uName, host, 1000, host, host, uName);
 		
-		try
+		/*try
 		{
 			stmt.executeUpdate("drop table if exists school;");
 			stmt.executeUpdate("create table school (name, state);");
 			PreparedStatement prep = con.prepareStatement(
-			"insert into school values (?, ?);");
+					"insert into school values (?, ?);");
 			prep.setString(1, "UTD");
 			prep.setString(2, "texas");
 			prep.addBatch();
@@ -151,19 +187,23 @@ class DataPort
 			con.setAutoCommit(false);
 			prep.executeBatch();
 			con.setAutoCommit(true);
+
 			ResultSet ss = stmt.executeQuery("select * from school;");
-			while (ss.next()) {
+			while (ss.next())
+			{
 				System.out.print("Namechool = " + ss.getString("name") + " ");
 				System.out.println("state" + ss.getString("state"));
 			}
 			ss.close();
+			
+			
 		} catch (SQLException ex)
 		{
 			Logger.getLogger(DataPort.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		
+		}*/
+
 		port.disconnect();
-		
+
 		//connection.executeAndReturn("SELECT * FROM accounts WHERE username = 'shs'", 3);
 		System.out.println("This is DataPort");
 	}
