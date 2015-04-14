@@ -52,7 +52,7 @@ public class DatabaseBookScraper
 	public void eraseBook(int ISBN)
 	{
 		deleteBook(ISBN);
-		UserBookTable.get().deleteBook(ISBN);
+		UserBookTable.get().eraseBook(ISBN);
 	}
 
 	private boolean existsISBN(int ISBN)

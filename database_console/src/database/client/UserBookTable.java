@@ -110,6 +110,28 @@ public class UserBookTable
 
 		return ubArray;
 	}
+	
+	public ArrayList<UserBook> searchCategory(String category)
+	{
+		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition, pictureurl FROM databasebook NATURAL JOIN userbook WHERE category = '" + category + "'";
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		ArrayList<UserBook> ubArray = new ArrayList();
+		for (String[] UB : temp)
+			ubArray.add(stringToUB(UB));
+
+		return ubArray;
+	}
+	
+	public ArrayList<UserBook> searchSubategory(String subcategory)
+	{
+		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition, pictureurl FROM databasebook NATURAL JOIN userbook WHERE subcategory = '" + subcategory + "'";
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		ArrayList<UserBook> ubArray = new ArrayList();
+		for (String[] UB : temp)
+			ubArray.add(stringToUB(UB));
+
+		return ubArray;
+	}
 
 	public boolean existsISBN(int ISBN)
 	{
