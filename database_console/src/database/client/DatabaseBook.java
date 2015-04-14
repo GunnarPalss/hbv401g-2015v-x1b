@@ -15,10 +15,10 @@ public class DatabaseBook
 	public final int ISBN;
 	public final String title;
 	public final String authors;
-	private final int price;
-	private final String description;
-	private final String category;
-	private final String subcategory;
+	public final int price;
+	public final String description;
+	public final String category;
+	public final String subcategory;
 
 	DatabaseBook(int ISBN, String title, String authors, int price, String description, String category, String subcategory)
 	{
@@ -46,23 +46,6 @@ public class DatabaseBook
 		this.description = this.category = this.subcategory = null;
 	}
 
-	/*
-	 public int getPrice() {
-	 return this.price;
-	 }
-
-	 public String getDescription() {
-	 return this.description;
-	 }
-
-	 public String getCategory(){
-	 return this.category;
-	 }
-        
-	 public String getSubcategory(){
-	 return this.subcategory;
-	 }
-	 */
 	public void print()
 	{
 		System.out.println("ISBN: " + Integer.toString(this.ISBN) + " title: "
