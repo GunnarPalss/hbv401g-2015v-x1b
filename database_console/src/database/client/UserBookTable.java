@@ -24,7 +24,7 @@ public class UserBookTable
 		return INSTANCE;
 	}
 
-	public static UserBook stringToUB(String[] data) throws IllegalArgumentException
+	public UserBook stringToUB(String[] data) throws IllegalArgumentException
 	{
 		if (data.length == 6)
 			return new UserBook(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), data[4], data[5]);
@@ -32,7 +32,7 @@ public class UserBookTable
 		throw new IllegalArgumentException("Input, String[], must have length 6.");
 	}
 
-	public static void createBook(int accountID, int ISBN)
+	public void createBook(int accountID, int ISBN)
 	{
 		//Ekki gá hvort að eintak með sama ISBN sé nú þegar til. Notandi má vera að selja tvö eintök af sömu bók.
 		DatabaseBook copy = DatabaseBookTable.get().getBook(ISBN);

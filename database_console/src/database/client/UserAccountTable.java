@@ -24,7 +24,7 @@ public class UserAccountTable
 		return INSTANCE;
 	}
 
-	public static UserAccount stringToUA(String[] data) throws IllegalArgumentException
+	public UserAccount stringToUA(String[] data) throws IllegalArgumentException
 	{
 		if (data.length == 3)
 			return new UserAccount(Integer.parseInt(data[0]), data[1], data[2]);
@@ -32,7 +32,7 @@ public class UserAccountTable
 		throw new IllegalArgumentException("Input, String[], must have length 3.");
 	}
 
-	public static void createAccount(String UN, String PW) throws IllegalArgumentException
+	public void createAccount(String UN, String PW) throws IllegalArgumentException
 	{
 		if (UN.length() > 20)
 			throw new IllegalArgumentException("Username is too long.");
@@ -50,14 +50,14 @@ public class UserAccountTable
 		DataPort.get().execute(SQL);
 	}
 
-	public static UserAccount getAccount(String UN)
+	public UserAccount getAccount(String UN)
 	{
 		String SQL = "SELECT * FROM accounts WHERE username = '" + UN + "'";
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 3);
 		return stringToUA(temp.get(0));
 	}
 
-	public static UserAccount getAccount(int id)
+	public UserAccount getAccount(int id)
 	{
 		String s = Integer.toString(id);
 		String SQL = "SELECT * FROM accounts WHERE accountid = " + s;
@@ -65,14 +65,14 @@ public class UserAccountTable
 		return stringToUA(temp.get(0));
 	}
 
-	public static boolean existsUN(String UN)
+	public boolean existsUN(String UN)
 	{
 		String SQL = "SELECT * FROM accounts WHERE username = '" + UN + "'";
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 3);
 		return !temp.isEmpty();
 	}
 
-	public static boolean existsID(int ID)
+	public boolean existsID(int ID)
 	{
 		String SQL = "SELECT * FROM accounts WHERE accountid = " + Integer.toString(ID);
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 3);

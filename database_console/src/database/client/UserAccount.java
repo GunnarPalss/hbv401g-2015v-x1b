@@ -48,7 +48,7 @@ public class UserAccount
 	{
 		String SQL = "SELECT * FROM accounts WHERE username = '" + this.username + "'";
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 3);
-		return UserAccountTable.stringToUA(temp.get(0)).password.equals(PW);
+		return UserAccountTable.get().stringToUA(temp.get(0)).password.equals(PW);
 	}
 
 	public void print()
