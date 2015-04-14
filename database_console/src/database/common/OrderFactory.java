@@ -11,8 +11,13 @@ package database.common;
  */
 public class OrderFactory
 {
-	public Order CreateSQLOrder(String target)
+	public Order CreateSetSQLOrder(String sql)
 	{
-		return new Order("SQL", target);
+		return new Order("SQLSet", sql);
+	}
+	
+	public Order CreateGetSQLOrder(String sql)
+	{
+		return new Order("SQLGet", sql);
 	}
 }

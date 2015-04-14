@@ -14,14 +14,16 @@ import java.util.ArrayList;
 public class UserAccountTable
 {
 	private static final UserAccountTable INSTANCE = new UserAccountTable();
-	
-	private UserAccountTable() {}
-	
+
+	private UserAccountTable()
+	{
+	}
+
 	public static UserAccountTable get()
 	{
 		return INSTANCE;
 	}
-	
+
 	public static UserAccount stringToUA(String[] data) throws IllegalArgumentException
 	{
 		if (data.length == 3)

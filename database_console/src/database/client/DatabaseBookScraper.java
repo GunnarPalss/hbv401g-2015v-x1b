@@ -10,14 +10,16 @@ import java.util.ArrayList;
 public class DatabaseBookScraper
 {
 	private static final DatabaseBookScraper INSTANCE = new DatabaseBookScraper();
-	
-	private DatabaseBookScraper() {}
-	
+
+	private DatabaseBookScraper()
+	{
+	}
+
 	public static DatabaseBookScraper get()
 	{
 		return INSTANCE;
 	}
-	
+
 	public void createBook(int ISBN, String title, String authors, int price, String description, String category, String subcategory)
 	{
 		if (existsISBN(ISBN))

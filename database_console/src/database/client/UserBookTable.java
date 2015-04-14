@@ -14,14 +14,16 @@ import java.util.ArrayList;
 public class UserBookTable
 {
 	private static final UserBookTable INSTANCE = new UserBookTable();
-	
-	private UserBookTable() {}
-	
+
+	private UserBookTable()
+	{
+	}
+
 	public static UserBookTable get()
 	{
 		return INSTANCE;
 	}
-	
+
 	public static UserBook stringToUB(String[] data) throws IllegalArgumentException
 	{
 		if (data.length == 6)

@@ -14,9 +14,11 @@ import java.util.ArrayList;
 public class DatabaseBookTable
 {
 	private static final DatabaseBookTable INSTANCE = new DatabaseBookTable();
-	
-	private DatabaseBookTable() {}
-	
+
+	private DatabaseBookTable()
+	{
+	}
+
 	public static DatabaseBookTable get()
 	{
 		return INSTANCE;

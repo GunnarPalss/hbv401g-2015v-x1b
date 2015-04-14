@@ -27,4 +27,17 @@ public class Utilities
 		for (int i = 0; i < str.length(); i++)
 			bb.putChar(str.charAt(i));
 	}
+	
+	public static int countOccurrences(String str, char lookingForGroup)
+	{
+		int count = 0;
+		for (int i=0; i < str.length(); i++)
+		{
+			if (str.charAt(i) == lookingForGroup)
+			{
+				 count++;
+			}
+		}
+		return count;
+	}
 }

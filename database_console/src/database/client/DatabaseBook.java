@@ -47,7 +47,7 @@ public class DatabaseBook
 		this.price = -1;
 		this.description = this.category = this.subcategory = null;
 	}
-	
+
 	/*
 	 public int getPrice() {
 	 return this.price;
@@ -65,7 +65,6 @@ public class DatabaseBook
 	 return this.subcategory;
 	 }
 	 */
-
 	public void print()
 	{
 		System.out.println("ISBN: " + Integer.toString(this.ISBN) + " title: "

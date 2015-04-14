@@ -76,7 +76,7 @@ class DataPort
 		}
 	}
 
-	public void initializeDatabase()
+	private void initializeDatabase()
 	{
 		try
 		{
@@ -164,47 +164,45 @@ class DataPort
 	public static void main(String[] args)
 	{
 		// TODO code application logic here
-		DataPort port = new DataPort();
+		DataPort port = DataPort.get();
 		port.connect();
 
 		DatabaseBookScraper.get().createBook(1011, uName, host, 1000, host, host, uName);
-		
+
 		/*try
-		{
-			stmt.executeUpdate("drop table if exists school;");
-			stmt.executeUpdate("create table school (name, state);");
-			PreparedStatement prep = con.prepareStatement(
-					"insert into school values (?, ?);");
-			prep.setString(1, "UTD");
-			prep.setString(2, "texas");
-			prep.addBatch();
-			prep.setString(1, "USC");
-			prep.setString(2, "california");
-			prep.addBatch();
-			prep.setString(1, "MIT");
-			prep.setString(2, "massachusetts");
-			prep.addBatch();
-			con.setAutoCommit(false);
-			prep.executeBatch();
-			con.setAutoCommit(true);
+		 {
+		 stmt.executeUpdate("drop table if exists school;");
+		 stmt.executeUpdate("create table school (name, state);");
+		 PreparedStatement prep = con.prepareStatement(
+		 "insert into school values (?, ?);");
+		 prep.setString(1, "UTD");
+		 prep.setString(2, "texas");
+		 prep.addBatch();
+		 prep.setString(1, "USC");
+		 prep.setString(2, "california");
+		 prep.addBatch();
+		 prep.setString(1, "MIT");
+		 prep.setString(2, "massachusetts");
+		 prep.addBatch();
+		 con.setAutoCommit(false);
+		 prep.executeBatch();
+		 con.setAutoCommit(true);
 
-			ResultSet ss = stmt.executeQuery("select * from school;");
-			while (ss.next())
-			{
-				System.out.print("Namechool = " + ss.getString("name") + " ");
-				System.out.println("state" + ss.getString("state"));
-			}
-			ss.close();
+		 ResultSet ss = stmt.executeQuery("select * from school;");
+		 while (ss.next())
+		 {
+		 System.out.print("Namechool = " + ss.getString("name") + " ");
+		 System.out.println("state" + ss.getString("state"));
+		 }
+		 ss.close();
 			
 			
-		} catch (SQLException ex)
-		{
-			Logger.getLogger(DataPort.class.getName()).log(Level.SEVERE, null, ex);
-		}*/
-
+		 } catch (SQLException ex)
+		 {
+		 Logger.getLogger(DataPort.class.getName()).log(Level.SEVERE, null, ex);
+		 }*/
 		port.disconnect();
 
-		//connection.executeAndReturn("SELECT * FROM accounts WHERE username = 'shs'", 3);
 		System.out.println("This is DataPort");
 	}
 }
