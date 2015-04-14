@@ -5,8 +5,6 @@
  */
 package database.client;
 
-import java.util.ArrayList;
-
 /*
  Scraper team, note that there is a specific DatabaseBook class for you
  called DatabaseBookScraper.java. This class is intended for the UI team.

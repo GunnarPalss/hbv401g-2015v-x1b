@@ -42,6 +42,7 @@ class DataPort
 
 	private DataPort()
 	{
+		connect();
 	}
 
 	public static DataPort get()
@@ -135,6 +136,8 @@ class DataPort
 			String[] data = new String[size];
 			ArrayList<String[]> list = new ArrayList();
 			this.rs = stmt.executeQuery(SQL);
+			if (rs == null)
+				return list;
 			while (rs.next())
 			{
 				for (int i = 0; i < size; i++)
@@ -164,10 +167,10 @@ class DataPort
 	public static void main(String[] args)
 	{
 		// TODO code application logic here
-		DataPort port = DataPort.get();
-		port.connect();
+		//DataPort port = DataPort.get();
+		//port.connect();
 
-		DatabaseBookScraper.get().createBook(1011, uName, host, 1000, host, host, uName);
+		//DatabaseBookScraper.get().createBook(1011, uName, host, 1000, host, host, uName);
 
 		/*try
 		 {
@@ -200,9 +203,9 @@ class DataPort
 		 } catch (SQLException ex)
 		 {
 		 Logger.getLogger(DataPort.class.getName()).log(Level.SEVERE, null, ex);
-		 }*/
+		 }
 		port.disconnect();
 
-		System.out.println("This is DataPort");
+		System.out.println("This is DataPort");*/
 	}
 }
