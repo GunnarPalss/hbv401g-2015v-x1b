@@ -18,6 +18,12 @@ public class UserAccount
 	public final String username;
 	final String password;
 	private static int id = 0;
+	
+	private int telephone;
+	private String name;
+	private String email;
+	
+	
 
 	UserAccount(int id, String UN, String PW)
 	{
@@ -32,6 +38,16 @@ public class UserAccount
 		username = UN;
 		password = PW;
 		id++;
+	}
+	
+	UserAccount(String UN, String PW, int telephone, String name, String email)
+	{
+		accountID = id;
+		username = UN;
+		password = PW;
+		this.telephone = telephone;
+		this.name = name;
+		this.email = email;
 	}
 
 	public void editPW(String oldPW, String newPW) throws IllegalArgumentException
@@ -49,6 +65,33 @@ public class UserAccount
 		String SQL = "SELECT * FROM accounts WHERE username = '" + this.username + "'";
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 3);
 		return UserAccountTable.get().stringToUA(temp.get(0)).password.equals(PW);
+	}
+	
+	public void editName(String newName){
+		this.name = newName;
+		String SQL = "UPDATE accounts SET name = " + newName + " WHERE accountid = " + this.accountID;
+	}
+	
+	public void editPhone(int newPhone){
+		this.telephone = newPhone;
+		String SQL = "UPDATE accounts SET telephone = " + newPhone + " WHERE accountid = " + this.accountID;
+	}
+	
+	public void editEmail(String newEmail){
+		this.email = newEmail;
+		String SQL = "UPDATE accounts SET email = " + newEmail + " WHERE accountid = " + this.accountID;
+	}
+	
+	public String getName(){
+		return this.name;
+	}
+	
+	public int getPhone(){
+		return this.telephone;
+	}
+	
+	public String getEmail(){
+		return this.email;
 	}
 
 	public void print()

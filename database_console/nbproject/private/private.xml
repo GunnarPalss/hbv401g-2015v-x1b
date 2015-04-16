@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/database_console/src/database/client/DatabaseBook.java</file>
-            <file>file:/E:/database_console/src/database/client/DataPort.java</file>
-            <file>file:/E:/database_console/src/database/client/UserAccount.java</file>
-            <file>file:/E:/database_console/src/database/client/UserBook.java</file>
+            <file>file:/C:/Users/Notandi/Documents/GitHub/hbv401g-2015v-x1b/database_console/src/database/client/UserAccount.java</file>
+            <file>file:/C:/Users/Notandi/Documents/GitHub/hbv401g-2015v-x1b/database_console/src/database/client/UserBook.java</file>
+            <file>file:/C:/Users/Notandi/Documents/GitHub/hbv401g-2015v-x1b/database_console/src/database/client/DataPort.java</file>
+            <file>file:/C:/Users/Notandi/Documents/GitHub/hbv401g-2015v-x1b/database_console/src/database/client/UserAccountTable.java</file>
+            <file>file:/C:/Users/Notandi/Documents/GitHub/hbv401g-2015v-x1b/database_console/src/database/client/DatabaseBook.java</file>
+            <file>file:/C:/Users/Notandi/Documents/GitHub/hbv401g-2015v-x1b/database_console/src/database/client/UserBookTable.java</file>
+            <file>file:/C:/Users/Notandi/Documents/GitHub/hbv401g-2015v-x1b/database_console/src/database/client/DatabaseBookScraper.java</file>
         </group>
     </open-files>
 </project-private>

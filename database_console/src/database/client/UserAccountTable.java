@@ -49,6 +49,31 @@ public class UserAccountTable
 		String SQL = "INSERT INTO accounts VALUES(" + Integer.toString(temp.accountID) + ",'" + temp.username + "','" + temp.password + "')";
 		DataPort.get().execute(SQL);
 	}
+	
+	public void createAccount(String UN, String PW, int telephone, String name, String email) throws IllegalArgumentException
+	{
+		if (UN.length() > 20)
+			throw new IllegalArgumentException("Username is too long.");
+		else if (PW.length() > 30)
+			throw new IllegalArgumentException("Password is too long.");
+		else if (existsUN(UN))
+			throw new IllegalArgumentException("Username already exists.");
+		else if (UN.equals(""))
+			throw new IllegalArgumentException("Username cannot be the empty string.");
+		else if (PW.equals(""))
+			throw new IllegalArgumentException("Password cannot be the empty string.");
+
+		UserAccount temp = new UserAccount(UN, PW, telephone, name, email);
+		
+		String SQL = "INSERT INTO accounts VALUES(" 
+				+ Integer.toString(temp.accountID) + ",'" 
+				+ temp.username + "','" 
+				+ temp.password + "',"
+				+ Integer.toString(temp.getPhone()) + ",'"
+				+ temp.getName() + "','"
+				+ temp.getEmail() + "')";
+		DataPort.get().execute(SQL);
+	}
 
 	public UserAccount getAccount(String UN)
 	{

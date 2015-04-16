@@ -97,10 +97,13 @@ class DataPort
 					+ "USERPRICE INTEGER NOT NULL, "
 					+ "CONDITION VARCHAR(15) NOT NULL"
 					+ ");");
-			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS USERACCOUNT ("
+			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ACCOUNTS ("
 					+ "ACCOUNTID INTEGER PRIMARY KEY NOT NULL, "
 					+ "USERNAME VARCHAR(20) NOT NULL, "
-					+ "PASSWORD VARCHAR(30) NOT NULL"
+					+ "PASSWORD VARCHAR(30) NOT NULL,"
+					+ "TELEPHONE INT,"
+					+ "NAME VARCHAR(50) NOT NULL,"
+					+ "EMAIL VARCHAR(50) NOT NULL"
 					+ ");");
 
 		} catch (SQLException ex)
