@@ -191,7 +191,7 @@ public class DatabaseBookTable
 	}
 	
 	public static void main(String[] args){
-		get().getBook(1234);
+		//get().getBook(1234);
 		//get().getBook(1234);
 		//get().searchEverything("tit", "auth", "category", null);
 	}

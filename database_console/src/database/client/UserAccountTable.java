@@ -46,7 +46,7 @@ public class UserAccountTable
 			throw new IllegalArgumentException("Password cannot be the empty string.");
 
 		UserAccount temp = new UserAccount(UN, PW);
-		String SQL = "INSERT INTO accounts VALUES(" + Integer.toString(temp.accountID) + ",'" + temp.username + "','" + temp.password + "')";
+		String SQL = "INSERT INTO accounts(username, password, telephone, name, email) VALUES('" + temp.username + "','" + temp.password + "', 5, 'noName', 'noEmail')";
 		DataPort.get().execute(SQL);
 	}
 	
@@ -65,8 +65,7 @@ public class UserAccountTable
 
 		UserAccount temp = new UserAccount(UN, PW, telephone, name, email);
 		
-		String SQL = "INSERT INTO accounts VALUES(" 
-				+ Integer.toString(temp.accountID) + ",'" 
+		String SQL = "INSERT INTO accounts(username, password, telephone, name, email) VALUES('"
 				+ temp.username + "','" 
 				+ temp.password + "',"
 				+ Integer.toString(temp.getPhone()) + ",'"
@@ -105,6 +104,6 @@ public class UserAccountTable
 	}
 	
 	public static void main(String[] args){
-		get().createAccount("username", "password", 1234567, "nafn", "email");
+		//get().createAccount("username", "password", 1234567, "nafn", "email");
 	}
 }
