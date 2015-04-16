@@ -165,7 +165,7 @@ public class DatabaseBookTable
 			if(p == true){
 				SQL = SQL.concat(" AND ");
 				}
-				SQL = SQL.concat("author LIKE '%" + author + "%'");
+				SQL = SQL.concat("authors LIKE '%" + author + "%'");
 				p = true;
 		}
 		if(category != null){
@@ -192,5 +192,7 @@ public class DatabaseBookTable
 	
 	public static void main(String[] args){
 		get().getBook(1234);
+		//get().getBook(1234);
+		//get().searchEverything("tit", "auth", "category", null);
 	}
 }

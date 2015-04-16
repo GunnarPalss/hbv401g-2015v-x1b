@@ -159,7 +159,7 @@ public class UserBookTable
 	public ArrayList<UserBook> searchEverything(String title, String author, String category, String subcategory){
 		
 		boolean p = false;
-		String SQL = "SELECT * FROM databasebook NATURAL JOIN userbook WHERE ";
+		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition, pictureurl  FROM databasebook NATURAL JOIN userbook WHERE ";
 		
 		if(title != null){
 			SQL = SQL.concat("title LIKE '%" + title + "%'");
@@ -169,21 +169,21 @@ public class UserBookTable
 			if(p == true){
 				SQL = SQL.concat(" AND ");
 				}
-				SQL = SQL.concat("author LIKE '%" + author + "%'");
-				p = true;
+			SQL = SQL.concat("authors LIKE '%" + author + "%'");
+			p = true;
 		}
 		if(category != null){
 			if(p == true){
 				SQL = SQL.concat(" AND ");
 				}
-				SQL = SQL.concat("category = '" + category + "'");
-				p = true;
+			SQL = SQL.concat("category = '" + category + "'");
+			p = true;
 		}
 		if(subcategory != null){
 			if(p == true){
 				SQL = SQL.concat(" AND ");
 				}
-				SQL = SQL.concat("subcategory = '" + subcategory + "'");
+			SQL = SQL.concat("subcategory = '" + subcategory + "'");
 		}
 		
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
@@ -205,6 +205,7 @@ public class UserBookTable
 	}
 	
 	public static void main(String[] args){
-		get().createBook(0, 1234);
+		//get().createBook(0, 1234);
+		
 	}
 }
