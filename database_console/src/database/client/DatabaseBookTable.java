@@ -111,4 +111,34 @@ public class DatabaseBookTable
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 1);
 		return !temp.isEmpty();
 	}
+	
+	public ArrayList<String> getCategories(){
+		String SQL = "SELECT DISTINCT category FROM databasebook";
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 1);
+		ArrayList<String> myArray = new ArrayList<String>();
+		for (String[] DBB : temp)
+			myArray.add(DBB[0]);
+		
+		return myArray;
+	}
+	
+	public ArrayList<String> getSubcategories(){
+		String SQL = "SELECT DISTINCT subcategory FROM databasebook";
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 1);
+		ArrayList<String> myArray = new ArrayList<String>();
+		for (String[] DBB : temp)
+			myArray.add(DBB[0]);
+		
+		return myArray;
+	}
+	
+	public ArrayList<String> getSubFromSuper(String category){
+		String SQL = "SELECT DISTINCT subcategory FROM databasebook WHERE category ='" + category + "'";
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 1);
+		ArrayList<String> myArray = new ArrayList<String>();
+		for (String[] DBB : temp)
+			myArray.add(DBB[0]);
+		
+		return myArray;
+	}
 }
