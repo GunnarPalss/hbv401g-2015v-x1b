@@ -49,6 +49,16 @@ public class UserAccount
 		this.name = name;
 		this.email = email;
 	}
+	
+	UserAccount(int accountID, String UN, String PW, int telephone, String name, String email)
+	{
+		this.accountID = accountID;
+		this.username = UN;
+		this.password = PW;
+		this.telephone = telephone;
+		this.name = name;
+		this.email = email;
+	}
 
 	public void editPW(String oldPW, String newPW) throws IllegalArgumentException
 	{

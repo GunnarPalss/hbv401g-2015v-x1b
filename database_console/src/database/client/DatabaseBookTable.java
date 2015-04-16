@@ -141,4 +141,52 @@ public class DatabaseBookTable
 		
 		return myArray;
 	}
+	
+	public ArrayList<DatabaseBook> searchTitleAndAuthor(String title, String author){
+		String SQL = "SELECT * FROM databasebook WHERE authors LIKE '%" + author + "%' AND title LIKE '%" + title + "%'";
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 7);
+		ArrayList<DatabaseBook> dbbArray = new ArrayList<>();
+		for (String[] DBB : temp)
+			dbbArray.add(stringToDBB(DBB));
+
+		return dbbArray;
+	}
+	
+	public ArrayList<DatabaseBook> searchEverything(String title, String author, String category, String subcategory){
+		
+		boolean p = false;
+		String SQL = "SELECT * FROM databasebook WHERE ";
+		
+		if(title != null){
+			SQL = SQL.concat("title LIKE '%" + title + "%'");
+			p = true;
+		}
+		if(author != null){
+			if(p == true){
+				SQL = SQL.concat(" AND ");
+				}
+				SQL = SQL.concat("author LIKE '%" + author + "%'");
+				p = true;
+		}
+		if(category != null){
+			if(p == true){
+				SQL = SQL.concat(" AND ");
+				}
+				SQL = SQL.concat("category = '" + category + "'");
+				p = true;
+		}
+		if(subcategory != null){
+			if(p == true){
+				SQL = SQL.concat(" AND ");
+				}
+				SQL = SQL.concat("subcategory = '" + subcategory + "'");
+		}
+		
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 7);
+		ArrayList<DatabaseBook> dbbArray = new ArrayList<>();
+		for (String[] DBB : temp)
+			dbbArray.add(stringToDBB(DBB));
+
+		return dbbArray;
+	}
 }

@@ -146,4 +146,62 @@ public class UserBookTable
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
 		return !temp.isEmpty();
 	}
+	
+	public ArrayList<UserBook> searchTitleAndAuthor(String title, String author){
+		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition, pictureurl FROM databasebook NATURAL JOIN usebook WHERE authors LIKE '%" + author + "%' AND title LIKE '%" + title + "%'";
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		ArrayList<UserBook> ubArray = new ArrayList<UserBook>();
+		for (String[] UB : temp)
+			ubArray.add(stringToUB(UB));
+
+		return ubArray;
+	}
+	
+	public ArrayList<UserBook> searchEverything(String title, String author, String category, String subcategory){
+		
+		boolean p = false;
+		String SQL = "SELECT * FROM databasebook NATURAL JOIN userbook WHERE ";
+		
+		if(title != null){
+			SQL = SQL.concat("title LIKE '%" + title + "%'");
+			p = true;
+		}
+		if(author != null){
+			if(p == true){
+				SQL = SQL.concat(" AND ");
+				}
+				SQL = SQL.concat("author LIKE '%" + author + "%'");
+				p = true;
+		}
+		if(category != null){
+			if(p == true){
+				SQL = SQL.concat(" AND ");
+				}
+				SQL = SQL.concat("category = '" + category + "'");
+				p = true;
+		}
+		if(subcategory != null){
+			if(p == true){
+				SQL = SQL.concat(" AND ");
+				}
+				SQL = SQL.concat("subcategory = '" + subcategory + "'");
+		}
+		
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		ArrayList<UserBook> ubArray = new ArrayList<>();
+		for (String[] UB : temp)
+			ubArray.add(stringToUB(UB));
+
+		return ubArray;
+	}
+	
+	public ArrayList<UserBook> getBooksByAccountID(int accountID){
+		String SQL = "SELECT * FROM UserBook WHERE accountID =" + Integer.toString(accountID);
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		ArrayList<UserBook> ubArray = new ArrayList();
+		for (String[] UB : temp)
+			ubArray.add(stringToUB(UB));
+
+		return ubArray;
+	}
 }
