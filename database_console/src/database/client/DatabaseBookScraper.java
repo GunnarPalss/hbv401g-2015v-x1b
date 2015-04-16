@@ -38,7 +38,7 @@ public class DatabaseBookScraper
 
 	private void deleteBook(int ISBN)
 	{
-		String SQL = "DELETE FROM databasebooks WHERE isbn = " + Integer.toString(ISBN);
+		String SQL = "DELETE FROM databasebook WHERE isbn = " + Integer.toString(ISBN);
 		DataPort.get().execute(SQL);
 	}
 
@@ -60,5 +60,9 @@ public class DatabaseBookScraper
 		String SQL = "SELECT * FROM databasebook WHERE isbn =" + Integer.toString(ISBN);
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 1);
 		return !temp.isEmpty();
+	}
+	
+	public static void main(String[] args){
+		
 	}
 }
