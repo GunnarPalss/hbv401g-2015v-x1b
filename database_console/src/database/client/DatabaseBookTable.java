@@ -42,14 +42,14 @@ public class DatabaseBookTable
 	{
 		String SQL = "SELECT * FROM databasebook WHERE isbn = " + Integer.toString(ISBN);
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 7);
-		return stringToDBB(temp.get(0));
+		return temp.isEmpty() ? null : stringToDBB(temp.get(0));
 	}
 
 	public DatabaseBook getBook(String title)
 	{
 		String SQL = "SELECT * FROM databasebook WHERE title = '" + title + "'";
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 7);
-		return stringToDBB(temp.get(0));
+		return temp.isEmpty() ? null : stringToDBB(temp.get(0));
 	}
 
 	public ArrayList<DatabaseBook> searchTitle(String title)
@@ -188,5 +188,9 @@ public class DatabaseBookTable
 			dbbArray.add(stringToDBB(DBB));
 
 		return dbbArray;
+	}
+	
+	public static void main(String[] args){
+		get().getBook(1234);
 	}
 }

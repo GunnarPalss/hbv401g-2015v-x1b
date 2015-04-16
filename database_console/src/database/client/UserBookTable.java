@@ -27,7 +27,7 @@ public class UserBookTable
 	public UserBook stringToUB(String[] data) throws IllegalArgumentException
 	{
 		if (data.length == 6)
-			return new UserBook(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), data[4], data[5]);
+			return new UserBook(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), data[4], "YouShouldNotSeeThis");
 
 		throw new IllegalArgumentException("Input, String[], must have length 6.");
 	}
@@ -35,13 +35,12 @@ public class UserBookTable
 	public void createBook(int accountID, int ISBN)
 	{
 		//Ekki gá hvort að eintak með sama ISBN sé nú þegar til. Notandi má vera að selja tvö eintök af sömu bók.
-		DatabaseBook copy = DatabaseBookTable.get().getBook(ISBN);
-		String SQL = "INSERT INTO UserBook VALUES('"
-				+ Integer.toString(accountID) + "','"
-				+ Integer.toString(ISBN) + "','"
-				+ Integer.toString(0) + "','" //Látum verðið vera 0 sem default. Það er svosem hægt að láta töfluna UserBook gera það sjálfkrafa.
-				+ "','" //Tómur strengur fyrir condition
-				+ "'"; //Tómur strengur fyrir pictureURL
+		//DatabaseBook copy = DatabaseBookTable.get().getBook(ISBN);
+		String SQL = "INSERT INTO userbook(accountID, isbn, userprice, condition) VALUES("
+				+ Integer.toString(accountID) + ","
+				+ Integer.toString(ISBN) + ","
+				+ Integer.toString(0) + ",'" //Látum verðið vera 0 sem default. Það er svosem hægt að láta töfluna UserBook gera það sjálfkrafa.
+				+ "')"; //Tómur strengur fyrir condition
 		DataPort.get().execute(SQL);
 	}
 
@@ -203,5 +202,9 @@ public class UserBookTable
 			ubArray.add(stringToUB(UB));
 
 		return ubArray;
+	}
+	
+	public static void main(String[] args){
+		get().createBook(0, 1234);
 	}
 }

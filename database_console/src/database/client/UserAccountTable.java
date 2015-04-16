@@ -79,7 +79,7 @@ public class UserAccountTable
 	{
 		String SQL = "SELECT * FROM accounts WHERE username = '" + UN + "'";
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
-		return stringToUA(temp.get(0));
+		return temp.isEmpty() ? null : stringToUA(temp.get(0));
 	}
 
 	public UserAccount getAccount(int id)
@@ -87,7 +87,7 @@ public class UserAccountTable
 		String s = Integer.toString(id);
 		String SQL = "SELECT * FROM accounts WHERE accountid = " + s;
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
-		return stringToUA(temp.get(0));
+		return temp.isEmpty() ? null : stringToUA(temp.get(0));
 	}
 
 	public boolean existsUN(String UN)
@@ -102,5 +102,9 @@ public class UserAccountTable
 		String SQL = "SELECT * FROM accounts WHERE accountid = " + Integer.toString(ID);
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
 		return (!temp.isEmpty());
+	}
+	
+	public static void main(String[] args){
+		get().createAccount("username", "password", 1234567, "nafn", "email");
 	}
 }
