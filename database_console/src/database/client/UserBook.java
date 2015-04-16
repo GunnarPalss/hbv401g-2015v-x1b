@@ -13,16 +13,14 @@ public class UserBook
 	public final int ISBN;
 	private int userPrice;
 	private String condition;
-	private String pictureURL;
 
-	UserBook(int instanceID, int accountID, int ISBN, int userPrice, String condition, String pictureURL)
+	UserBook(int instanceID, int accountID, int ISBN, int userPrice, String condition)
 	{
 		this.instanceID = instanceID;
 		this.accountID = accountID;
 		this.ISBN = ISBN;
 		this.userPrice = userPrice;
 		this.condition = condition;
-		this.pictureURL = pictureURL;
 	}
 
 	public void editPrice(int price)
@@ -37,12 +35,6 @@ public class UserBook
 		String SQL = "UPDATE userbook SET condition = " + condition + " WHERE instanceid = " + this.instanceID;
 	}
 
-	public void editPictureURL(String pictureURL)
-	{
-		this.pictureURL = pictureURL;
-		String SQL = "UPDATE userbook SET pictureurl = " + pictureURL + " WHERE instanceid = " + this.instanceID;
-	}
-
 	public int getPrice()
 	{
 		return this.userPrice;
@@ -51,11 +43,6 @@ public class UserBook
 	public String getCondition()
 	{
 		return this.condition;
-	}
-
-	public String getPictureURL()
-	{
-		return this.pictureURL;
 	}
 
 	public void print()

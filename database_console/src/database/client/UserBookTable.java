@@ -26,10 +26,10 @@ public class UserBookTable
 
 	public UserBook stringToUB(String[] data) throws IllegalArgumentException
 	{
-		if (data.length == 6)
-			return new UserBook(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), data[4], "YouShouldNotSeeThis");
+		if (data.length == 5)
+			return new UserBook(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]), Integer.parseInt(data[3]), data[4]);
 
-		throw new IllegalArgumentException("Input, String[], must have length 6.");
+		throw new IllegalArgumentException("Input, String[], must have length 5.");
 	}
 
 	public void createBook(int accountID, int ISBN)
@@ -47,7 +47,7 @@ public class UserBookTable
 	public ArrayList<UserBook> getBooks(int ISBN)
 	{
 		String SQL = "SELECT * FROM UserBook WHERE isbn =" + Integer.toString(ISBN);
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
 		ArrayList<UserBook> ubArray = new ArrayList();
 		for (String[] UB : temp)
 			ubArray.add(stringToUB(UB));
@@ -57,8 +57,8 @@ public class UserBookTable
 
 	public ArrayList<UserBook> getBooks(String title)
 	{
-		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition, pictureurl FROM UserBook NATURAL JOIN DatabaseBook WHERE title ='" + title + "'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition FROM UserBook NATURAL JOIN DatabaseBook WHERE title ='" + title + "'";
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
 		ArrayList<UserBook> ubArray = new ArrayList();
 		for (String[] UB : temp)
 			ubArray.add(stringToUB(UB));
@@ -90,8 +90,8 @@ public class UserBookTable
 
 	public ArrayList<UserBook> searchAuthor(String author)
 	{
-		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition, pictureurl FROM databasebook NATURAL JOIN userbook WHERE authors Like '%" + author + "%'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition FROM databasebook NATURAL JOIN userbook WHERE authors Like '%" + author + "%'";
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
 		ArrayList<UserBook> ubArray = new ArrayList();
 		for (String[] UB : temp)
 			ubArray.add(stringToUB(UB));
@@ -101,8 +101,8 @@ public class UserBookTable
 
 	public ArrayList<UserBook> searchTitle(String title)
 	{
-		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition, pictureurl FROM databasebook NATURAL JOIN userbook WHERE title LIKE '%" + title + "%'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition FROM databasebook NATURAL JOIN userbook WHERE title LIKE '%" + title + "%'";
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
 		ArrayList<UserBook> ubArray = new ArrayList();
 		for (String[] UB : temp)
 			ubArray.add(stringToUB(UB));
@@ -112,8 +112,8 @@ public class UserBookTable
 	
 	public ArrayList<UserBook> searchCategory(String category)
 	{
-		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition, pictureurl FROM databasebook NATURAL JOIN userbook WHERE category = '" + category + "'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition FROM databasebook NATURAL JOIN userbook WHERE category = '" + category + "'";
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
 		ArrayList<UserBook> ubArray = new ArrayList();
 		for (String[] UB : temp)
 			ubArray.add(stringToUB(UB));
@@ -123,8 +123,8 @@ public class UserBookTable
 	
 	public ArrayList<UserBook> searchSubategory(String subcategory)
 	{
-		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition, pictureurl FROM databasebook NATURAL JOIN userbook WHERE subcategory = '" + subcategory + "'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition FROM databasebook NATURAL JOIN userbook WHERE subcategory = '" + subcategory + "'";
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
 		ArrayList<UserBook> ubArray = new ArrayList();
 		for (String[] UB : temp)
 			ubArray.add(stringToUB(UB));
@@ -135,20 +135,20 @@ public class UserBookTable
 	public boolean existsISBN(int ISBN)
 	{
 		String SQL = "SELECT * FROM UserBook WHERE isbn =" + Integer.toString(ISBN);
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
 		return !temp.isEmpty();
 	}
 
 	public boolean existsTitle(String title)
 	{
 		String SQL = "SELECT * FROM UserBook WHERE title ='" + title + "'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
 		return !temp.isEmpty();
 	}
 	
 	public ArrayList<UserBook> searchTitleAndAuthor(String title, String author){
-		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition, pictureurl FROM databasebook NATURAL JOIN usebook WHERE authors LIKE '%" + author + "%' AND title LIKE '%" + title + "%'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition FROM databasebook NATURAL JOIN usebook WHERE authors LIKE '%" + author + "%' AND title LIKE '%" + title + "%'";
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
 		ArrayList<UserBook> ubArray = new ArrayList<UserBook>();
 		for (String[] UB : temp)
 			ubArray.add(stringToUB(UB));
@@ -186,7 +186,7 @@ public class UserBookTable
 			SQL = SQL.concat("subcategory = '" + subcategory + "'");
 		}
 		
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
 		ArrayList<UserBook> ubArray = new ArrayList<>();
 		for (String[] UB : temp)
 			ubArray.add(stringToUB(UB));
@@ -196,7 +196,7 @@ public class UserBookTable
 	
 	public ArrayList<UserBook> getBooksByAccountID(int accountID){
 		String SQL = "SELECT * FROM UserBook WHERE accountID =" + Integer.toString(accountID);
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
 		ArrayList<UserBook> ubArray = new ArrayList();
 		for (String[] UB : temp)
 			ubArray.add(stringToUB(UB));
@@ -206,6 +206,6 @@ public class UserBookTable
 	
 	public static void main(String[] args){
 		//get().createBook(0, 1234);
-		
+		get().getBooks(1234);
 	}
 }
