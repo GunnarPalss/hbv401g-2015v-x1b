@@ -17,32 +17,22 @@ public class UserAccount
 	public final int accountID;
 	public final String username;
 	final String password;
-	private static int id = 0;
 	
 	private int telephone;
 	private String name;
 	private String email;
 	
-	
-
-	UserAccount(int id, String UN, String PW)
-	{
-		accountID = id;
-		username = UN;
-		password = PW;
-	}
 
 	UserAccount(String UN, String PW)
 	{
-		accountID = id;
+		accountID = -1;
 		username = UN;
 		password = PW;
-		id++;
 	}
 	
 	UserAccount(String UN, String PW, int telephone, String name, String email)
 	{
-		accountID = id;
+		accountID = -1;
 		username = UN;
 		password = PW;
 		this.telephone = telephone;
