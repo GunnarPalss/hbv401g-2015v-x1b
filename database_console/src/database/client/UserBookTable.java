@@ -79,17 +79,6 @@ public class UserBookTable
 		return ubArray;
 	}
 
-	public ArrayList<UserBook> getBooks(String title)
-	{
-		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition FROM UserBook NATURAL JOIN DatabaseBook WHERE title ='" + title + "'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
-		ArrayList<UserBook> ubArray = new ArrayList();
-		for (String[] UB : temp)
-			ubArray.add(stringToUB(UB));
-
-		return ubArray;
-	}
-
 	//Ath. deleteBook eyðir einu eintaki af UserBook með ákv. ISBN, eraseBook eyðir öllum eintökum af UserBook með ákveðið ISBN.
 	//Klasinn DatabaseBook notar fallið eraseBook.
 	public void deleteBook(int accountID, int ISBN)
@@ -110,28 +99,6 @@ public class UserBookTable
 	{
 		String SQL = "DELETE FROM UserBook WHERE isbn = " + Integer.toString(ISBN);
 		DataPort.get().execute(SQL);
-	}
-
-	public ArrayList<UserBook> searchAuthor(String author)
-	{
-		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition FROM databasebook NATURAL JOIN userbook WHERE authors Like '%" + author + "%'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
-		ArrayList<UserBook> ubArray = new ArrayList();
-		for (String[] UB : temp)
-			ubArray.add(stringToUB(UB));
-
-		return ubArray;
-	}
-
-	public ArrayList<UserBook> searchTitle(String title)
-	{
-		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition FROM databasebook NATURAL JOIN userbook WHERE title LIKE '%" + title + "%'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
-		ArrayList<UserBook> ubArray = new ArrayList();
-		for (String[] UB : temp)
-			ubArray.add(stringToUB(UB));
-
-		return ubArray;
 	}
 	
 	public ArrayList<UserBook> searchCategory(String category)
@@ -168,16 +135,6 @@ public class UserBookTable
 		String SQL = "SELECT * FROM UserBook WHERE title ='" + title + "'";
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
 		return !temp.isEmpty();
-	}
-	
-	public ArrayList<UserBook> searchTitleAndAuthor(String title, String author){
-		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition FROM databasebook NATURAL JOIN usebook WHERE authors LIKE '%" + author + "%' AND title LIKE '%" + title + "%'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
-		ArrayList<UserBook> ubArray = new ArrayList<UserBook>();
-		for (String[] UB : temp)
-			ubArray.add(stringToUB(UB));
-
-		return ubArray;
 	}
 	
 	public ArrayList<UserBook> searchEverything(String title, String author, String category, String subcategory){

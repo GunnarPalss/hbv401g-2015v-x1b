@@ -45,35 +45,6 @@ public class DatabaseBookTable
 		return temp.isEmpty() ? null : stringToDBB(temp.get(0));
 	}
 
-	public DatabaseBook getBook(String title)
-	{
-		String SQL = "SELECT * FROM databasebook WHERE title = '" + title + "'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 7);
-		return temp.isEmpty() ? null : stringToDBB(temp.get(0));
-	}
-
-	public ArrayList<DatabaseBook> searchTitle(String title)
-	{
-		String SQL = "SELECT * FROM databasebook WHERE title LIKE '%" + title + "%'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 7);
-		ArrayList<DatabaseBook> dbbArray = new ArrayList<>();
-		for (String[] DBB : temp)
-			dbbArray.add(stringToDBB(DBB));
-
-		return dbbArray;
-	}
-
-	public ArrayList<DatabaseBook> searchAuthor(String author)
-	{
-		String SQL = "SELECT * FROM databasebook WHERE authors LIKE '%" + author + "%'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 7);
-		ArrayList<DatabaseBook> dbbArray = new ArrayList<>();
-		for (String[] DBB : temp)
-			dbbArray.add(stringToDBB(DBB));
-
-		return dbbArray;
-	}
-
 	//Þetta er nákvæm leit og skilar aðeins flokki sem heitir nákvæmlega leitarorðinu.
 	public ArrayList<DatabaseBook> searchCategory(String category)
 	{
@@ -140,16 +111,6 @@ public class DatabaseBookTable
 			myArray.add(DBB[0]);
 		
 		return myArray;
-	}
-	
-	public ArrayList<DatabaseBook> searchTitleAndAuthor(String title, String author){
-		String SQL = "SELECT * FROM databasebook WHERE authors LIKE '%" + author + "%' AND title LIKE '%" + title + "%'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 7);
-		ArrayList<DatabaseBook> dbbArray = new ArrayList<>();
-		for (String[] DBB : temp)
-			dbbArray.add(stringToDBB(DBB));
-
-		return dbbArray;
 	}
 	
 	public ArrayList<DatabaseBook> searchEverything(String title, String author, String category, String subcategory){
