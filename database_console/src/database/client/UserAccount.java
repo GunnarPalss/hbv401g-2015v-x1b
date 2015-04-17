@@ -79,17 +79,20 @@ public class UserAccount
 	
 	public void editName(String newName){
 		this.name = newName;
-		String SQL = "UPDATE accounts SET name = " + newName + " WHERE accountid = " + this.accountID;
+		String SQL = "UPDATE accounts SET name = '" + newName + "' WHERE accountid = " + this.accountID;
+		DataPort.get().execute(SQL);
 	}
 	
 	public void editPhone(int newPhone){
 		this.telephone = newPhone;
 		String SQL = "UPDATE accounts SET telephone = " + newPhone + " WHERE accountid = " + this.accountID;
+		DataPort.get().execute(SQL);
 	}
 	
 	public void editEmail(String newEmail){
 		this.email = newEmail;
-		String SQL = "UPDATE accounts SET email = " + newEmail + " WHERE accountid = " + this.accountID;
+		String SQL = "UPDATE accounts SET email = '" + newEmail + "' WHERE accountid = " + this.accountID;
+		DataPort.get().execute(SQL);
 	}
 	
 	public String getName(){

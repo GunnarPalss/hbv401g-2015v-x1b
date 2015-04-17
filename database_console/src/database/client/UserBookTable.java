@@ -43,10 +43,34 @@ public class UserBookTable
 				+ "')"; //Tómur strengur fyrir condition
 		DataPort.get().execute(SQL);
 	}
+	
+	public void createBook(int accountID, int ISBN, int price, String condition)
+	{
+		String myCond = condition == null ? "''" : "'" + condition + "'";
+		//Ekki gá hvort að eintak með sama ISBN sé nú þegar til. Notandi má vera að selja tvö eintök af sömu bók.
+		//DatabaseBook copy = DatabaseBookTable.get().getBook(ISBN);
+		String SQL = "INSERT INTO userbook(accountID, isbn, userprice, condition) VALUES("
+				+ Integer.toString(accountID) + ","
+				+ Integer.toString(ISBN) + ","
+				+ Integer.toString(price) + ", " //Látum verðið vera 0 sem default. Það er svosem hægt að láta töfluna UserBook gera það sjálfkrafa.
+				+ myCond + ")"; //Tómur strengur fyrir condition
+		DataPort.get().execute(SQL);
+	}
 
 	public ArrayList<UserBook> getBooks(int ISBN)
 	{
 		String SQL = "SELECT * FROM UserBook WHERE isbn =" + Integer.toString(ISBN);
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
+		ArrayList<UserBook> ubArray = new ArrayList();
+		for (String[] UB : temp)
+			ubArray.add(stringToUB(UB));
+
+		return ubArray;
+	}
+	
+	public ArrayList<UserBook> getBooks(int accountID, int ISBN)
+	{
+		String SQL = "SELECT * FROM UserBook WHERE accountid =" + Integer.toString(accountID) + " AND isbn = " + Integer.toString(ISBN);
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);
 		ArrayList<UserBook> ubArray = new ArrayList();
 		for (String[] UB : temp)

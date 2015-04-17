@@ -27,12 +27,14 @@ public class UserBook
 	{
 		this.userPrice = price;
 		String SQL = "UPDATE userbook SET userprice = " + Integer.toString(price) + " WHERE instanceid = " + this.instanceID;
+		DataPort.get().execute(SQL);
 	}
 
 	public void editCondition(String condition)
 	{
 		this.condition = condition;
-		String SQL = "UPDATE userbook SET condition = " + condition + " WHERE instanceid = " + this.instanceID;
+		String SQL = "UPDATE userbook SET condition = '" + condition + "' WHERE instanceid = " + this.instanceID;
+		DataPort.get().execute(SQL);
 	}
 
 	public int getPrice()

@@ -64,5 +64,7 @@ public class DatabaseBookScraper
 	
 	public static void main(String[] args){
 		//get().createBook(1234, "title", "author", 5000, "description", "category", "subcategory");
+		//get().createBook((int)0000555F, "title2", "author2", 5000, "description2", "category2", "subcategory2");
+		//System.out.println(01234);
 	}
 }
