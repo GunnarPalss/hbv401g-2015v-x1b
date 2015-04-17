@@ -25,13 +25,13 @@ class DataPort
 	 */
 	private static final DataPort INSTANCE = new DataPort();
 
-	private static final String host = "jdbc:sqlite:db/database.sqlite";
-	private static final String uName = "administrator";
-	private static final String uPass = "administrator";
+	private final String host = "jdbc:sqlite:db/database.sqlite";
+	private final String uName = "administrator";
+	private final String uPass = "administrator";
 
-	private static Connection con;
-	private static Statement stmt;
-	private static ResultSet rs;
+	private Connection con;
+	private Statement stmt;
+	private ResultSet rs;
 	/*private PreparedStatement prepStmt;
 
 	 private final String add = "INSERT INTO ? VALUES(?)";
@@ -136,16 +136,17 @@ class DataPort
 
 		try
 		{
-			String[] data = new String[size];
+			
 			ArrayList<String[]> list = new ArrayList();
 			this.rs = stmt.executeQuery(SQL);
 			if (rs == null)
 				return list;
 			while (rs.next())
 			{
+				String[] data = new String[size];
 				for (int i = 0; i < size; i++)
 					data[i] = rs.getString(i + 1);
-				list.add(data);
+				list.add(data.clone()); //list.add(data);
 			}
 			return list;
 		} catch (SQLException err)
