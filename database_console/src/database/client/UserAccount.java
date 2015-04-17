@@ -73,7 +73,7 @@ public class UserAccount
 	public boolean isPW(String PW)
 	{
 		String SQL = "SELECT * FROM accounts WHERE username = '" + this.username + "'";
-		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 3);
+		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 6);
 		return UserAccountTable.get().stringToUA(temp.get(0)).password.equals(PW);
 	}
 	

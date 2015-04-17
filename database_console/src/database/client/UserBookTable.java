@@ -159,7 +159,7 @@ public class UserBookTable
 	public ArrayList<UserBook> searchEverything(String title, String author, String category, String subcategory){
 		
 		boolean p = false;
-		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition, pictureurl  FROM databasebook NATURAL JOIN userbook WHERE ";
+		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition FROM databasebook NATURAL JOIN userbook WHERE ";
 		
 		if(title != null){
 			SQL = SQL.concat("title LIKE '%" + title + "%'");
@@ -207,5 +207,7 @@ public class UserBookTable
 	public static void main(String[] args){
 		//get().createBook(0, 1234);
 		//get().getBooks(1234);
+		get().searchEverything("ti", "aut", "category", "subcategory");
 	}
+
 }

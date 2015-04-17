@@ -105,5 +105,7 @@ public class UserAccountTable
 	
 	public static void main(String[] args){
 		//get().createAccount("username", "password", 1234567, "nafn", "email");
+		//get().getAccount("username").print();
+		//get().getAccount("asdf");
 	}
 }
