@@ -22,14 +22,6 @@ public class UserAccount
 	private String name;
 	private String email;
 	
-
-	UserAccount(String UN, String PW)
-	{
-		accountID = -1;
-		username = UN;
-		password = PW;
-	}
-	
 	UserAccount(String UN, String PW, int telephone, String name, String email)
 	{
 		accountID = -1;

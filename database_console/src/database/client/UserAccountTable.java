@@ -31,24 +31,6 @@ public class UserAccountTable
 
 		throw new IllegalArgumentException("Input, String[], must have length 6.");
 	}
-
-	public void createAccount(String UN, String PW) throws IllegalArgumentException
-	{
-		if (UN.length() > 20)
-			throw new IllegalArgumentException("Username is too long.");
-		else if (PW.length() > 30)
-			throw new IllegalArgumentException("Password is too long.");
-		else if (existsUN(UN))
-			throw new IllegalArgumentException("Username already exists.");
-		else if (UN.equals(""))
-			throw new IllegalArgumentException("Username cannot be the empty string.");
-		else if (PW.equals(""))
-			throw new IllegalArgumentException("Password cannot be the empty string.");
-
-		UserAccount temp = new UserAccount(UN, PW);
-		String SQL = "INSERT INTO accounts(username, password, telephone, name, email) VALUES('" + temp.username + "','" + temp.password + "', 5, 'noName', 'noEmail')";
-		DataPort.get().execute(SQL);
-	}
 	
 	public void createAccount(String UN, String PW, int telephone, String name, String email) throws IllegalArgumentException
 	{
