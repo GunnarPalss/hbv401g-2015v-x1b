@@ -22,6 +22,7 @@ public class UserAccount
 	private String name;
 	private String email;
 	
+	//The instance generated in this constructor is never returned to anyone. It is used for creating an account in UserAccountTable.
 	UserAccount(String UN, String PW, int telephone, String name, String email)
 	{
 		accountID = -1;
@@ -32,6 +33,7 @@ public class UserAccount
 		this.email = email;
 	}
 	
+	//This is used to return an instance of UserAccount from the database.
 	UserAccount(int accountID, String UN, String PW, int telephone, String name, String email)
 	{
 		this.accountID = accountID;
@@ -42,6 +44,10 @@ public class UserAccount
 		this.email = email;
 	}
 
+	//Usage: UA.editPW(oldPassword, newPassword);
+    //Pre: Nothing.
+    //Post: If the UserAccount UA's current password matches oldPassword and newPassword is not null or the empty string,
+	//		UA's current password becomes newPassword.
 	public void editPW(String oldPW, String newPW) throws IllegalArgumentException
 	{
 		if (!this.isPW(oldPW))
@@ -52,6 +58,9 @@ public class UserAccount
 		System.out.println("Password updated.");
 	}
 
+	//Usage: p = UA.isPW(password);
+    //Pre: Nothing.
+    //Post: Returns true if the UserAccount UA has password PW, false otherwise.
 	public boolean isPW(String PW)
 	{
 		String SQL = "SELECT * FROM accounts WHERE username = '" + this.username + "'";
@@ -59,18 +68,27 @@ public class UserAccount
 		return UserAccountTable.get().stringToUA(temp.get(0)).password.equals(PW);
 	}
 	
+	//Usage: ua.editName(newName);
+	//Pre: Nothing.
+	//Post: The user account ua now has the new name newName.
 	public void editName(String newName){
 		this.name = newName;
 		String SQL = "UPDATE accounts SET name = '" + newName + "' WHERE accountid = " + this.accountID;
 		DataPort.get().execute(SQL);
 	}
 	
+	//Usage: ua.editPhone(newPhone);
+	//Pre: Nothing.
+	//Post: The user account ua now has the new phone number newPhone.
 	public void editPhone(int newPhone){
 		this.telephone = newPhone;
 		String SQL = "UPDATE accounts SET telephone = " + newPhone + " WHERE accountid = " + this.accountID;
 		DataPort.get().execute(SQL);
 	}
 	
+	//Usage: ua.editPhone(newPhone);
+	//Pre: Nothing.
+	//Post: The user account ua now has the the new email address newEmail.
 	public void editEmail(String newEmail){
 		this.email = newEmail;
 		String SQL = "UPDATE accounts SET email = '" + newEmail + "' WHERE accountid = " + this.accountID;

@@ -19,11 +19,17 @@ public class DatabaseBookTable
 	{
 	}
 
+	//Usage: instance = DatabaseBookTable.get();
+	//Pre: Nothing.
+	//Post: Returns instance variable INSTANCE.
 	public static DatabaseBookTable get()
 	{
 		return INSTANCE;
 	}
 
+	//Usage: dbb = instance.stringToDBB(data);
+	//Pre: data has length 7, 6, 5 or 4.
+	//Post: dbb has has info as if the contents of data were entered into the DatabaseBook constructor.
 	private DatabaseBook stringToDBB(String[] data) throws IllegalArgumentException
 	{
 		if (data.length == 7)
@@ -37,7 +43,10 @@ public class DatabaseBookTable
 		else
 			throw new IllegalArgumentException("Input, String[], must have length 4 or 7.");
 	}
-
+	
+	//Usage: databasebook = instance.getBook(ISBN);
+	//Pre: Nothing.
+	//Post: Returns a DatabaseBook with the specified ISBN.
 	public DatabaseBook getBook(int ISBN)
 	{
 		String SQL = "SELECT * FROM databasebook WHERE isbn = " + Integer.toString(ISBN);
@@ -45,7 +54,9 @@ public class DatabaseBookTable
 		return temp.isEmpty() ? null : stringToDBB(temp.get(0));
 	}
 
-	//Þetta er nákvæm leit og skilar aðeins flokki sem heitir nákvæmlega leitarorðinu.
+	//Usage: list = instance.searchCategory(category);
+	//Pre: Nothing.
+	//Post: list is a list of all books in the DatabaseBook database that belong to a category matching the argument category. The parameter must match the category *exactly*.
 	public ArrayList<DatabaseBook> searchCategory(String category)
 	{
 		String SQL = "SELECT * FROM databasebook WHERE category = '" + category + "'";
@@ -57,7 +68,9 @@ public class DatabaseBookTable
 		return dbbArray;
 	}
 
-	//Þetta er nákvæm leit og skilar aðeins undirflokki sem heitir nákvæmlega leitarorðinu.
+	//Usage: list = instance.searchSubategory(subcategory);
+	//Pre: Nothing.
+	//Post: list is a list of all books in the DatabaseBook database that belong to a subcategory matching the argument subcategory. The parameter must match the subcategory *exactly*.
 	public ArrayList<DatabaseBook> searchSubcategory(String subcategory)
 	{
 		String SQL = "SELECT * FROM databasebook WHERE subcategory = '" + subcategory + "'";
@@ -69,6 +82,9 @@ public class DatabaseBookTable
 		return dbbArray;
 	}
 
+	//Usage: p = instance.exists(ISBN);
+	//Pre: Nothing.
+	//Post: Returns true if a database book entry exists in the database with an ISBN matching the argument, false otherwise.
 	public boolean existsISBN(int ISBN)
 	{
 		String SQL = "SELECT * FROM databasebook WHERE isbn =" + Integer.toString(ISBN);
@@ -76,6 +92,9 @@ public class DatabaseBookTable
 		return !temp.isEmpty();
 	}
 
+	//Usage: p = instance.exists(title);
+	//Pre: Nothing.
+	//Post: Returns true if a database book entry exists in the database with a title matching the argument, false otherwise.
 	public boolean existsTitle(String title)
 	{
 		String SQL = "SELECT * FROM databasebook WHERE title ='" + title + "'";
@@ -83,6 +102,9 @@ public class DatabaseBookTable
 		return !temp.isEmpty();
 	}
 	
+	//Usage: list = instance.getCategories();
+	//Pre: Nothing.
+	//Post: list is a list of all different categories that exist in the DatabaseBook database.
 	public ArrayList<String> getCategories(){
 		String SQL = "SELECT DISTINCT category FROM databasebook";
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 1);
@@ -93,6 +115,9 @@ public class DatabaseBookTable
 		return myArray;
 	}
 	
+	//Usage: list = instance.getSubcategories();
+	//Pre: Nothing.
+	//Post: list includes all different subcategories that exist in the DatabaseBook database.
 	public ArrayList<String> getSubcategories(){
 		String SQL = "SELECT DISTINCT subcategory FROM databasebook";
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 1);
@@ -103,6 +128,9 @@ public class DatabaseBookTable
 		return myArray;
 	}
 	
+	//Usage: list = instance.getSubFromSuper(category);
+	//Pre: Nothing.
+	//Post: list includes all subcategories of the category matching the argument.
 	public ArrayList<String> getSubFromSuper(String category){
 		String SQL = "SELECT DISTINCT subcategory FROM databasebook WHERE category ='" + category + "'";
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 1);
@@ -113,6 +141,9 @@ public class DatabaseBookTable
 		return myArray;
 	}
 	
+	//Usage: list = instance.searchEveryThing(title, author, category, subcategory);
+	//Pre: At least one argument must not be null.
+	//Post: list includes all database books with title and author similar to parameters, and category and subcategory exactly like paramters.
 	public ArrayList<DatabaseBook> searchEverything(String title, String author, String category, String subcategory){
 		
 		boolean p = false;

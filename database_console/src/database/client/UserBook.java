@@ -23,13 +23,19 @@ public class UserBook
 		this.condition = condition;
 	}
 
+	//Usage: ub.editPrice(price);
+	//Pre: Nothing.
+	//Post: The user book ub now has a new price equal to the argument.
 	public void editPrice(int price)
 	{
 		this.userPrice = price;
 		String SQL = "UPDATE userbook SET userprice = " + Integer.toString(price) + " WHERE instanceid = " + this.instanceID;
 		DataPort.get().execute(SQL);
 	}
-
+	
+	//Usage: ub.editCondition(condition);
+	//Pre: Nothing.
+	//Post: The user book ub now has a new condition matching the argument.
 	public void editCondition(String condition)
 	{
 		this.condition = condition;

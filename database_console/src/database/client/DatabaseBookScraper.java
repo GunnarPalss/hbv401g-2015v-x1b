@@ -15,11 +15,17 @@ public class DatabaseBookScraper
 	{
 	}
 
+	//Usage: instance = DatabaseBookScreaper.get();
+	//Pre: Nothing:
+	//Post: Returns instance variable INSTANCE.
 	public static DatabaseBookScraper get()
 	{
 		return INSTANCE;
 	}
 
+	//Usage: instance.createBook(ISBN, title. authors, price, description, category, subcategory);
+	//Pre: description is not null.
+	//Post: A database book with info from parameters has been inserted into the database.
 	public void createBook(int ISBN, String title, String authors, int price, String description, String category, String subcategory)
 	{
 		if (existsISBN(ISBN))
@@ -36,25 +42,36 @@ public class DatabaseBookScraper
 		DataPort.get().execute(SQL);
 	}
 
+	//Usage: instance.deleteBook(ISBN);
+	//Pre: Nothing.
+	//Post: The book with the given ISBN has been removed from the table DatabaseBook.
 	private void deleteBook(int ISBN)
 	{
 		String SQL = "DELETE FROM databasebook WHERE isbn = " + Integer.toString(ISBN);
 		DataPort.get().execute(SQL);
 	}
 
+	//Usage: instance.deleteBook(ISBN);
+	//Pre: Nothing.
+	//Post: The book with the given title has been removed from the table DatabaseBook.
 	private void deleteBook(String title)
 	{
 		String SQL = "DELETE FROM databasebook WHERE title = '" + title + "'";
 		DataPort.get().execute(SQL);
 	}
 
-	//Ath. fallið createBook notar fallið deleteBook. Þess vegna er annað fall, eraseBook, til að fjarlægja einnig öll UserBook með sama ISBN.
+	//Usage: instance.eraseBook(ISBN);
+	//Pre: Nothing.
+	//Post: The book with the given title has been removed from the table DatabaseBook. All instances of the book have also been removed from the table UserBook.
 	public void eraseBook(int ISBN)
 	{
 		deleteBook(ISBN);
 		UserBookTable.get().eraseBook(ISBN);
 	}
 
+	//Usage: p = instance.existsISBN(ISBN);
+	//Pre: Nothing.
+	//Post: Returns true if a book with the given ISBN exists in the table DatabaseBook.
 	private boolean existsISBN(int ISBN)
 	{
 		String SQL = "SELECT * FROM databasebook WHERE isbn =" + Integer.toString(ISBN);

@@ -19,11 +19,17 @@ public class UserBookTable
 	{
 	}
 
+	//Usage: instance = UserBookTable.get();
+	//Pre: Nothing:
+	//Post: Returns instance variable INSTANCE.
 	public static UserBookTable get()
 	{
 		return INSTANCE;
 	}
 
+	//Usage: ub = instance.stringToUB(data);
+	//Pre: data has length 5.
+	//Post: ub has has info as if the contents of data were entered into the UserBook constructor.
 	public UserBook stringToUB(String[] data) throws IllegalArgumentException
 	{
 		if (data.length == 5)
@@ -32,6 +38,9 @@ public class UserBookTable
 		throw new IllegalArgumentException("Input, String[], must have length 5.");
 	}
 	
+	//Usage: instance.createBook(accountID, int ISBN, int price, String condition);
+	//Pre: Nothing.
+	//Post: A user book has been inserted into the database with the specified parameters.
 	public void createBook(int accountID, int ISBN, int price, String condition)
 	{
 		String myCond = condition == null ? "''" : "'" + condition + "'";
@@ -45,6 +54,9 @@ public class UserBookTable
 		DataPort.get().execute(SQL);
 	}
 
+	//Usage: list = instance.getBooks(ISBN);
+	//Pre: Nothing.
+	//Post: list includes all user books from the database that have given ISBN.
 	public ArrayList<UserBook> getBooks(int ISBN)
 	{
 		String SQL = "SELECT * FROM UserBook WHERE isbn =" + Integer.toString(ISBN);
@@ -56,6 +68,9 @@ public class UserBookTable
 		return ubArray;
 	}
 	
+	//Usage: list = instance.getBooks(accountID, ISBN);
+	//Pre: Nothing.
+	//Post: list includes all user books from the database that have given ISBN and accountID.
 	public ArrayList<UserBook> getBooks(int accountID, int ISBN)
 	{
 		String SQL = "SELECT * FROM UserBook WHERE accountid =" + Integer.toString(accountID) + " AND isbn = " + Integer.toString(ISBN);
@@ -66,29 +81,37 @@ public class UserBookTable
 
 		return ubArray;
 	}
-
-	//Ath. deleteBook eyðir einu eintaki af UserBook með ákv. ISBN, eraseBook eyðir öllum eintökum af UserBook með ákveðið ISBN.
-	//Klasinn DatabaseBook notar fallið eraseBook.
+	
+	//Usage: instance.deleteBooks(accountID, ISBN);
+	//Pre: Nothing.
+	//Post: Deletes all user books with given ISBN from the account with accountID from the database.
 	public void deleteBook(int accountID, int ISBN)
 	{
 		String SQL = "DELETE FROM UserBook WHERE accountID = " + Integer.toString(accountID) + " AND isbn = " + Integer.toString(ISBN);
 		DataPort.get().execute(SQL);
 	}
 
+	//Usage: instance.deleteBooks(instanceID);
+	//Pre: Nothing.
+	//Post: Deletes user book with given instanceID from the database.
 	public void deleteBook(int instanceID)
 	{
 		String SQL = "DELETE FROM UserBook WHERE instanceID = " + Integer.toString(instanceID);
 		DataPort.get().execute(SQL);
 	}
 
-	//Ath. deleteBook eyðir einu eintaki af UserBook með ákv. ISBN, eraseBook eyðir öllum eintökum af UserBook með ákveðið ISBN.
-	//Klasinn DatabaseBook notar fallið eraseBook.
+	//Usage: instance.eraseBook(ISBN);
+	//Pre: Nothing.
+	//Post: All user books with the given ISBN have been erased from the database.
 	public void eraseBook(int ISBN)
 	{
 		String SQL = "DELETE FROM UserBook WHERE isbn = " + Integer.toString(ISBN);
 		DataPort.get().execute(SQL);
 	}
 	
+	//Usage: list = instance.searchCategory(category);
+	//Pre: Nothing.
+	//Post: list is a list of all books in the UserBook database that belong to a category matching the argument category. The parameter must match the category *exactly*.
 	public ArrayList<UserBook> searchCategory(String category)
 	{
 		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition FROM databasebook NATURAL JOIN userbook WHERE category = '" + category + "'";
@@ -100,6 +123,9 @@ public class UserBookTable
 		return ubArray;
 	}
 	
+	//Usage: list = instance.searchSubategory(subcategory);
+	//Pre: Nothing.
+	//Post: list is a list of all books in the UserBook database that belong to a subcategory matching the argument subcategory. The parameter must match the subcategory *exactly*.
 	public ArrayList<UserBook> searchSubategory(String subcategory)
 	{
 		String SQL = "SELECT instanceid, accountid, isbn, userprice, condition FROM databasebook NATURAL JOIN userbook WHERE subcategory = '" + subcategory + "'";
@@ -111,6 +137,9 @@ public class UserBookTable
 		return ubArray;
 	}
 
+	//Usage: p = instance.exists(ISBN);
+	//Pre: Nothing.
+	//Post: Returns true  if a user book with given ISBN exists, false otherwise.
 	public boolean existsISBN(int ISBN)
 	{
 		String SQL = "SELECT * FROM UserBook WHERE isbn =" + Integer.toString(ISBN);
@@ -118,6 +147,9 @@ public class UserBookTable
 		return !temp.isEmpty();
 	}
 
+	//Usage: p = instance.exists(title);
+	//Pre: Nothing.
+	//Post: Returns true  if a user book with given title exists, false otherwise.
 	public boolean existsTitle(String title)
 	{
 		String SQL = "SELECT * FROM UserBook WHERE title ='" + title + "'";
@@ -125,6 +157,10 @@ public class UserBookTable
 		return !temp.isEmpty();
 	}
 	
+	//Usage: list = instance.searchEveryThing(title, author, category, subcategory);
+	//Pre: At least one argument must not be null.
+	//Post: list includes all user books with title and author similar to parameters, and category and subcategory exactly like paramters.
+	//		If NULL arguments are given. They are excluded from the search. 
 	public ArrayList<UserBook> searchEverything(String title, String author, String category, String subcategory){
 		
 		boolean p = false;
@@ -163,6 +199,9 @@ public class UserBookTable
 		return ubArray;
 	}
 	
+	//Usage: list = instance.getBooksByAccountID(accountID);
+	//Pre: Nothing.
+	//Post: list includes all user books from the database submitted by user account with accountID.
 	public ArrayList<UserBook> getBooksByAccountID(int accountID){
 		String SQL = "SELECT * FROM UserBook WHERE accountID =" + Integer.toString(accountID);
 		ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, 5);

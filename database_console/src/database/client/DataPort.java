@@ -45,11 +45,17 @@ class DataPort
 		connect();
 	}
 
+	//Usage: instance = DataPort.get();
+	//Pre: Nothing.
+	//Post: Returns the instance variable INSTANCE.
 	public static DataPort get()
 	{
 		return INSTANCE;
 	}
 
+	//Usage: instance.connect();
+	//Pre: Nothing.
+	//Post: The program has connected to its database.
 	public void connect()
 	{
 		try
@@ -64,6 +70,9 @@ class DataPort
 		}
 	}
 
+	//Usage: instance.connect();
+	//Pre: Nothing.
+	//Post: The program has disconnected from its database.
 	public void disconnect()
 	{
 		try
@@ -77,6 +86,9 @@ class DataPort
 		}
 	}
 
+	//Usage: instance.initializeDatabase();
+	//Pre: Nothing.
+	//Post: The tables DATABASEBOOK, USERBOOK and ACCOUNTS have been created in the database if they did not exist.
 	private void initializeDatabase()
 	{
 		try
@@ -119,18 +131,16 @@ class DataPort
 	 if(!acceptableChars.contains(Character.toString(s.charAt(i)))){return false;}
 	 }
 	 return true;
-	 }
+	 }*/
 
-	 public static ArrayList arrayFromResult(String SQL, int size){
-	 ArrayList<String[]> temp = DataPort.get().executeAndReturn(SQL, size);
-	 ArrayList myArray = new ArrayList();
-	 for(String[] s: temp){
-	 //myArray.add(stringToItem(s));
-	 }
-	 return myArray;
-	 }
-	 */
-	//Notað til að fá upplýsingar úr gagnagrunni:
+
+	//Usage: list = instance.executeAndReturn(SQL, size);
+	//Pre: SQL must be a valid SQL query that does *not* edit data, i.e. only accesses it.
+	//		Size must not exceed the number of columns of the table returned from the SQL query.
+	//Post: Each String[] in list has the same length as the argument size.
+	//		Each String[] in list includes data from one row of the table returned from the SQL query. If the argument size is
+	//		less than the number of columns of the table returned from the SQL query, each String[] only includes data from the left-most columns of the result.
+	//		list has the same length as the number of rows in the table returned from the SQL query.
 	public ArrayList<String[]> executeAndReturn(String SQL, int size)
 	{
 
@@ -156,7 +166,8 @@ class DataPort
 		}
 	}
 
-	//Notað til að setja upplýsingar inn í gagnagrunn/breyta upplýsingum í gagnagrunni:
+	//Usage: instance.execute(SQL);
+	//Pre: SQL must be a valid SQL query that *edits* or *adds* data to the databse.
 	public void execute(String SQL)
 	{
 		try
